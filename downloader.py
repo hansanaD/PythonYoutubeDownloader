@@ -5,9 +5,8 @@ from modules import vidmerge
 
 print(f"===============================\n Python YouTube Downloader v2.0\n===============================\n")
 
-# videoURL = str(input("Enter Video Link : "))
-videoURL = 'https://www.youtube.com/watch?v=mDTMBdYAjHI'
-# https://youtu.be/krsBRQbOPQ4?si=UKY-g36vKVM7Umqc : MrBeast Video
+videoURL = str(input("Enter Video Link : "))
+# videoURL = 'https://www.youtube.com/watch?v=mDTMBdYAjHI'
 
 yt = YouTube(videoURL)
 
@@ -38,6 +37,8 @@ vidmerge.merge(title=yt.title)
 # Remove Seperate Media Files
 os.remove(f"{mediaPath}/{yt.title}.mp4")
 os.remove(f"{mediaPath}/{yt.title}.mp3")
+
+print("Download Completed! ✔")
 
     
 
