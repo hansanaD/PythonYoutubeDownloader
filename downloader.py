@@ -20,6 +20,7 @@ def download_loading_bar(d):
 ydl_opts = {
     "quiet": True,
     'outtmpl': "%(title)s_%(id)s.%(ext)s",
+    # "format": "bestvideo+bestaudio/best",
 
     'progress_hooks': [download_loading_bar],
     'no_color': True,
