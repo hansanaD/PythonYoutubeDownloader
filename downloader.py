@@ -1,23 +1,34 @@
 from pytube import YouTube
 import os
+from tabulate import tabulate
+
+# Custom Modules
 from modules import vidmerge
 
 
 print(f"===============================\n Python YouTube Downloader v2.0\n===============================\n")
 
-videoURL = str(input("Enter Video Link : "))
-# videoURL = 'https://www.youtube.com/watch?v=mDTMBdYAjHI'
+# videoURL = str(input("Enter Video Link : "))
+print("\nLooking for Available Qualities..")
+videoURL = 'https://www.youtube.com/watch?v=mDTMBdYAjHI'
 
 yt = YouTube(videoURL)
 
 mediaPath = f"{os.getcwd()}/vids"
 
+streamsData = []
+
 # print("-------VIDEOS-------")
 for count, stream in enumerate(yt.streams.filter(only_video=True, mime_type="video/mp4"), start=1):
-    print(f"{count})  Res: {stream.resolution}  |  Size:{stream.filesize_mb} mb")
+    # print(f"{count}.  Res: {stream.resolution}  |  Size:{stream.filesize_mb} mb")
     # print(stream)
+    streamsData.append([count, stream.resolution, stream.filesize_mb])
 
-userInput = input(str("Enter Res: "))
+streamsDataTable = tabulate(streamsData, headers=["No", "Resolution", "Size (MB)"], tablefmt='rounded_outline')
+# Print the Table of Stream Data
+print(streamsDataTable)
+
+userInput = input(str("Enter the Res Number: "))
 
 for stream in yt.streams.filter(only_video=True, mime_type="video/mp4", res=userInput):
     stream.download(filename=f"{yt.title}.mp4", output_path=mediaPath)
