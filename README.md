@@ -1,6 +1,8 @@
 # Python Youtube Downloader
 
-Paste this into your terminal & enjoy!
+A Simple Python YouTube Downloader (Educational Purposes Only)
+
+Paste these into your terminal & enjoy!
 
 ### On Android (Termux) :
 ```
