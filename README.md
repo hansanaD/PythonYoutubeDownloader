@@ -1,6 +1,6 @@
 # Python Youtube Downloader
 
-A Simple Python YouTube Downloader (Educational Purposes Only)
+A Simple Python YouTube Downloader **(Educational Purposes Only)**
 
 Paste these into your terminal & enjoy!
 
