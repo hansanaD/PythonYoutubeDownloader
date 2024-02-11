@@ -37,4 +37,11 @@ cd PythonYoutubeDownloader;
 pip3 install -r requirements.txt; 
 python3 downloader.py # 
 ```
-## Have a great day! 😄🎉
+## Fixing Errors:
+If you are having the error that says : 
+`FileNotFoundError: [Errno 2] No such file or directory: 'ffmpeg'` while running the code, 
+just 
+```
+brew install ffmpeg
+``` 
+in your terminal.
