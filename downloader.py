@@ -9,7 +9,7 @@ from modules import vidmerge, progressBar, banner
 banner.WelcomeBanner()
 videoURL = str(input("Enter Video Link : "))
 
-# Only Enable for dev. purposes.
+# Don't Enable if you're don't know what it does.
 # videoURL = 'https://www.youtube.com/watch?v=mDTMBdYAjHI' 
 
 os.system('cls')
@@ -24,7 +24,7 @@ streamsData = []
 
 mediaPath = f"{os.getcwd()}/vids"
 
-# print("-------VIDEOS-------")
+# -------VIDEOS-------
 
 for count, stream in enumerate(streams, start=1):
     # print(f"{count}.  Res: {stream.resolution}  |  Size:{stream.filesize_mb} mb")
@@ -48,7 +48,8 @@ except:
     print("Wrong Input! Try Again!")
     sys.exit()
 
-# print("-------AUDIOS-------")
+# -------AUDIOS-------
+    
 for stream in yt.streams.filter(only_audio=True, abr="128kbps"):
     stream.download(filename=f"{yt.title}.mp3", output_path=mediaPath)
     print("Audio Downloaded. ✔")
