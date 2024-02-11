@@ -9,12 +9,13 @@ from modules import vidmerge, progressBar, banner
 banner.WelcomeBanner()
 videoURL = str(input("Enter Video Link : "))
 
+# Only Enable for dev. purposes.
+# videoURL = 'https://www.youtube.com/watch?v=mDTMBdYAjHI' 
+
 os.system('cls')
 banner.WelcomeBanner()
 print("Looking for Available Qualities..")
 
-# Only Enable for dev. purposes.
-# videoURL = 'https://www.youtube.com/watch?v=mDTMBdYAjHI' 
 
 yt = pytube.YouTube(videoURL, on_progress_callback=progressBar.progress_hook)
 
