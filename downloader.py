@@ -47,12 +47,6 @@ except:
     print("Wrong Input! Try Again!")
     sys.exit()
 
-# for stream in streams:
-#     stream.download(filename=f"{yt.title}.mp4", output_path=mediaPath)
-#     print("Resolution_code : MP4 Downloaded.✔")
-
-
-
 # print("-------AUDIOS-------")
 for stream in yt.streams.filter(only_audio=True, abr="128kbps"):
     stream.download(filename=f"{yt.title}.mp3", output_path=mediaPath)
@@ -63,7 +57,7 @@ videoID = pytube.extract.video_id(videoURL)
 videoFileName = f"{yt.title}_{videoID}"
 
 # Merge the Audio & Video File 
-vidmerge.merge(title=f"{yt.title}", outVidTitle=f"{videoFileName}_{videoID}")
+vidmerge.merge(title=f"{yt.title}", outVidTitle=videoFileName)
 
 # Remove Seperate Media Files
 os.remove(f"{mediaPath}/{yt.title}.mp4")
@@ -77,3 +71,4 @@ print(f"\nCheck the 'vid' Folder for your files!\n")
     
 
                                 
+
