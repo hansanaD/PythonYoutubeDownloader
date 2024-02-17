@@ -16,7 +16,11 @@ If you are having the error that says :
 just 
 ```
 brew install ffmpeg
-``` 
+```
+or
+```
+choco install ffmpeg
+```
 in your terminal.
 
 ## Disclaimer
