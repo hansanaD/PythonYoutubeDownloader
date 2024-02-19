@@ -159,8 +159,9 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 
-.mp4
-.mp3
-test.py
 /vids
-/outputs
+
+# Don't worry! just some personal files.
+test.py 
+HackNasa.py
+
