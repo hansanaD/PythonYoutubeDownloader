@@ -10,7 +10,7 @@ def WelcomeBanner():
                                           
   -------------------------------         
     Version: V3.0
-    Credits: Simatwa/y2mate-api
+    API: Simatwa/y2mate-api
     Dev: @HansanaD
   -------------------------------      
 """)
