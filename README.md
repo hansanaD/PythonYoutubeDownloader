@@ -1,4 +1,4 @@
-# Python Youtube Downloader V3
+# Python Youtube Downloader V3 📥
 
 A Simple Python YouTube Downloader **(Educational Purposes Only)**
 
