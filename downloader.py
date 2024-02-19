@@ -1,74 +1,81 @@
-import pytube
+from y2mate_api import Handler
 import os , sys
 from tabulate import tabulate
-
 # Custom Modules
-from modules import vidmerge, progressBar, banner
+from modules import banner, cmds
 
+# Clear the previous output from the terminal.
+cmds.clear()
 # print Welcome Banner
 banner.WelcomeBanner()
+
 videoURL = str(input("Enter Video Link : "))
 
 # Don't Enable if you're don't know what it does.
 # videoURL = 'https://www.youtube.com/watch?v=mDTMBdYAjHI' 
 
-os.system('cls')
+cmds.clear()
 banner.WelcomeBanner()
 print("Looking for Available Qualities..")
 
+api = Handler(videoURL)
 
-yt = pytube.YouTube(videoURL, on_progress_callback=progressBar.progress_hook)
+q_list = ['4k', '1080p', '720p', '480p', '360p', '240p']
+q_list.reverse()
 
-streams = yt.streams.filter(only_video=True, mime_type="video/mp4")
-streamsData = []
+urlList = {} 
+
+
+def getVidInfo(r):
+    for video_metadata in api.run(quality=r):
+        
+        quality = video_metadata.get("q")
+        vidLink = video_metadata.get("dlink")
+        
+        if vidLink == None:
+            pass
+        else:
+            urlList.update({quality : vidLink})
+            # print(r, " fetched")
+            
+# Iterate over q_list to check if res quality exist on that video
+for count, r in enumerate(q_list):
+    getVidInfo(r)
+        
+# print qualities to the terminal
+showList = {}
+for count, q in enumerate(urlList, 1):
+    showList.update({count: q})
+    
+print(tabulate(showList.items(), headers=["Q-No", "Quality"], tablefmt="heavy_grid"))
+
+
+userInput = int(input("Enter the your Q-No: "))
+cmds.clear()
+print("Downloading...Please wait!")
 
 mediaPath = f"{os.getcwd()}/vids"
 
-# -------VIDEOS-------
+# Download the video using user's input
+for video_metadata in api.run(quality=showList[userInput]):
+    # print(video_metadata)
+     
+    if not os.path.exists(mediaPath):
+        os.makedirs(mediaPath)
 
-for count, stream in enumerate(streams, start=1):
-    # print(f"{count}.  Res: {stream.resolution}  |  Size:{stream.filesize_mb} mb")
-    # print(stream)
-    streamsData.append([count, stream.resolution, stream.filesize_mb])
+    api.save(third_dict=video_metadata, dir="vids", progress_bar=True)
 
-streamsDataTable = tabulate(streamsData, headers=["No", "Resolution", "Size (MB)"], tablefmt='rounded_outline')
-
-# Clear the terminal
-os.system('cls')
-
-# Print the Table of Stream Data
-print(streamsDataTable)
-
-try:
-    userInput = int(input("Enter the Res Number: ")) - 1
-    streams[userInput].download(filename=f"{yt.title}.mp4", output_path=mediaPath)
-    print("Video Downloaded. ✔")
-
-except:
-    print("Wrong Input! Try Again!")
-    sys.exit()
-
-# -------AUDIOS-------
-    
-for stream in yt.streams.filter(only_audio=True, abr="128kbps"):
-    stream.download(filename=f"{yt.title}.mp3", output_path=mediaPath)
-    print("Audio Downloaded. ✔")
+    vidFileName = f"{video_metadata["title"]} {video_metadata["vid"]}_{video_metadata["fquality"]}.{video_metadata["ftype"]}"
+    print("Downloading:", vidFileName)
+    # Delete your file automatically after it downloaded.
+    # os.remove(f"{mediaPath}/{vidFileName}")
 
 
-videoID = pytube.extract.video_id(videoURL)
-videoFileName = f"{yt.title}_{videoID}"
 
-# Merge the Audio & Video File 
-vidmerge.merge(title=f"{yt.title}", outVidTitle=videoFileName)
-
-# Remove Seperate Media Files
-os.remove(f"{mediaPath}/{yt.title}.mp4")
-os.remove(f"{mediaPath}/{yt.title}.mp3")
-
-os.system('cls')
+cmds.clear()
 banner.WelcomeBanner()
-print("Download Completed! ✔")
-print(f"\nCheck the 'vid' Folder for your files!\n")
+print(f"\nPlease Check the 'vid' Folder for your files!\n")
+print("Download Completed! ✅")
 
     
 

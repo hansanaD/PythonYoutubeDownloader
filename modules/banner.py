@@ -9,8 +9,8 @@ def WelcomeBanner():
     D  O  W  N  L  O  A  D  E  R          
                                           
   -------------------------------         
-    Version: V2.0
-    Credits: PyTube 
+    Version: V3.0
+    Credits: Simatwa/y2mate-api
     Dev: @HansanaD
   -------------------------------      
 """)
