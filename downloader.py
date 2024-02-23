@@ -21,45 +21,70 @@ print("Looking for Available Qualities..")
 api = Handler(videoURL)
 
 q_list = ['4k', '1080p', '720p', '480p', '360p', '240p']
-q_list.reverse()
+# q_list.reverse()
 
-urlList = {} 
+urlList = []
 
 
 def getVidInfo(r):
     for video_metadata in api.run(quality=r):
         
-        quality = video_metadata.get("q")
-        vidLink = video_metadata.get("dlink")
+        q = video_metadata.get("q")
+        dlink = video_metadata.get("dlink")
+        size = video_metadata.get("size")
         
-        if vidLink == None:
+        if dlink == None:
             pass
         else:
-            urlList.update({quality : vidLink})
+            urlList.append([q, size,dlink])
             # print(r, " fetched")
             
+
+
 # Iterate over q_list to check if res quality exist on that video
-for count, r in enumerate(q_list):
+for r in q_list:
     getVidInfo(r)
-        
-# print qualities to the terminal
+
+# print(urlList)
+
+# Create a new list to show
 showList = {}
-for count, q in enumerate(urlList, 1):
-    showList.update({count: q})
-    
-print(tabulate(showList.items(), headers=["Q-No", "Quality"], tablefmt="heavy_grid"))
+for count, item in enumerate(urlList, 1):
+    del item[2] # Remove dlink from list
+    q = item[0]
+    # print(i)
+    size = item[1] 
+    showList.update( { count: { "q":q, "size": size }} )
+
+# print(showList)
+
+def showQTable():
+    tableList = []
+    for count, item in enumerate(showList, 1):
+        q = showList[item]["q"]
+        size = showList[item]["size"]
+        tableList.append( [count, q, size ] )
+    print(tabulate(tableList, headers=["Q-No", "Quality", "Size"], tablefmt="heavy_grid"))
+
+showQTable()
 
 
-userInput = int(input("Enter the your Q-No: "))
-cmds.clear()
-print("Downloading...Please wait!")
+
+
+
+try:
+    userInput = int(input("Enter the your Q-No: "))
+    cmds.clear()
+    banner.WelcomeBanner()
+    print("Downloading...Please wait!\n")
+except:
+    print("Wrong Input try again!")
 
 mediaPath = f"{os.getcwd()}/vids"
 
 # Download the video using user's input
-for video_metadata in api.run(quality=showList[userInput]):
+for video_metadata in api.run(quality=showList[userInput]["q"]):
     # print(video_metadata)
-     
     if not os.path.exists(mediaPath):
         os.makedirs(mediaPath)
 
@@ -74,8 +99,8 @@ for video_metadata in api.run(quality=showList[userInput]):
 
 cmds.clear()
 banner.WelcomeBanner()
+print(f"Download Completed:\n{vidFileName} ✅")
 print(f"\nPlease Check the 'vid' Folder for your files!\n")
-print("Download Completed! ✅")
 
     
 

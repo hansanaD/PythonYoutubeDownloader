@@ -9,7 +9,7 @@ def WelcomeBanner():
     D  O  W  N  L  O  A  D  E  R          
                                           
   -------------------------------         
-    Version: V3.0
+    Version: V3.1
     API: Simatwa/y2mate-api
     Dev: @HansanaD
   -------------------------------      
